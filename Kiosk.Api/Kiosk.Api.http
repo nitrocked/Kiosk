@@ -4,3 +4,13 @@ GET {{Kiosk.Api_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+POST {{Kiosk.Api_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "password"
+}
+
+###
