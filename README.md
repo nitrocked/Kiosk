@@ -1,5 +1,7 @@
 # Kiosk API REST for technical knowledge test.
 
+![Swagger UI Preview](swagger.png/800x400?text=Swagger+UI+Preview)
+
 The API emulates the management of kiosk terminals using three entities structured as follows:
   - Customer: Customers that can own one or more kiosk terminals. A customer may have from 0 to N associated kiosks.
   - Kiosk: A kiosk terminal. It is associated with a single Customer and may have from 0 to M associated Devices.
@@ -107,4 +109,3 @@ The API emulates the management of kiosk terminals using three entities structur
    ```
    http://localhost:5200/swagger/index.html
    ```
-
