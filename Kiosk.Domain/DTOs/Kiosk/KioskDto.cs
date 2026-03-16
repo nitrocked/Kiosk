@@ -24,8 +24,6 @@ public class KioskDto
     public string? Location { get; set; }
     
     public int? CustomerId { get; set; }
-    
-    public CustomerDto? Customer { get; set; }
-    
+        
     public List<DeviceDto> Devices { get; set; } = new();
 }

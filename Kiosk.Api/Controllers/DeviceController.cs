@@ -19,9 +19,9 @@ public class DeviceController : ControllerBase
 
     // GET: api/Device
     /// <summary>
-    /// Retrieves all devices with their associated kiosk and customer information.
+    /// Retrieves all devices.
     /// </summary>
-    /// <returns>A list of all devices with their kiosk details.</returns>
+    /// <returns>A list of all devices.</returns>
     /// <response code="200">Returns the list of devices.</response>
     /// <response code="500">If there was an error retrieving the devices.</response>
     [HttpGet]
@@ -33,7 +33,7 @@ public class DeviceController : ControllerBase
 
     // GET: api/Device/5
     /// <summary>
-    /// Retrieves a specific device by ID, including its kiosk and customer information.
+    /// Retrieves a specific device by ID.
     /// </summary>
     /// <param name="id">The ID of the device to retrieve.</param>
     /// <returns>The device with the specified ID.</returns>

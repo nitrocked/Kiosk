@@ -26,7 +26,7 @@ public class AuthService : IAuthService
             return new LoginResponseDto
             {
                 Token = token,
-                Expiry = DateTime.UtcNow.AddMinutes(int.Parse(_configuration["Jwt:ExpiryInMinutes"]!))
+                Expiry = DateTime.UtcNow.AddMinutes(int.Parse(_configuration["Jwt:ExpiryInMinutes"] ?? "180")!)
             };
         }
         return null;
@@ -48,7 +48,7 @@ public class AuthService : IAuthService
             issuer: _configuration["Jwt:Issuer"],
             audience: _configuration["Jwt:Audience"],
             claims: claims,
-            expires: DateTime.Now.AddMinutes(int.Parse(_configuration["Jwt:ExpiryInMinutes"]!)),
+            expires: DateTime.Now.AddMinutes(int.Parse(_configuration["Jwt:ExpiryInMinutes"] ?? "180")!),
             signingCredentials: creds);
 
         return new JwtSecurityTokenHandler().WriteToken(token);

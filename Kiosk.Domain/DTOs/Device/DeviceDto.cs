@@ -24,6 +24,4 @@ public class DeviceDto
     public string? FirmwareVersion { get; set; }
 
     public int? KioskId { get; set; }
-
-    public KioskDto? Kiosk { get; set; }
 }
