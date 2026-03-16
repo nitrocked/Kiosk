@@ -26,27 +26,33 @@ Write-Host "`n2. Running unit tests..." -ForegroundColor Yellow
 
 Write-Host "Running Domain tests..." -ForegroundColor Cyan
 try {
-    dotnet test Kiosk.Domain.Tests/Kiosk.Domain.Tests.csproj --no-build --verbosity minimal
+    dotnet test Kiosk.Domain.Tests --no-build --verbosity minimal
     Write-Host "Domain tests passed." -ForegroundColor Green
 } catch {
     Write-Host "Error in Domain tests: $_" -ForegroundColor Red
     exit 1
 }
+Write-Host "`nDomain tests completed, press any key to continue..." -ForegroundColor Cyan
+[Console]::ReadKey($true) | Out-Null
+
 
 Write-Host "Running API tests..." -ForegroundColor Cyan
 try {
-    dotnet test Kiosk.Api.Tests/Kiosk.Api.Tests.csproj --no-build --verbosity minimal
+    dotnet test Kiosk.Api.Tests --no-build --verbosity minimal
     Write-Host "API tests passed." -ForegroundColor Green
 } catch {
     Write-Host "Error in API tests: $_" -ForegroundColor Red
     exit 1
 }
+Write-Host "`nAPI tests completed, press any key to continue..." -ForegroundColor Cyan
+[Console]::ReadKey($true) | Out-Null
 
 # 3. Run Kiosk.Api
 Write-Host "`n3. Running Kiosk.Api..." -ForegroundColor Yellow
-Write-Host "Check output to ensure host address. The API will be probably available at https://localhost:5200" -ForegroundColor Cyan
+Write-Host "Check output to ensure host listening address. The API will be probably available at https://localhost:5200" -ForegroundColor Cyan
 Write-Host "Swagger UI will be available at https://localhost:5200/swagger/index.html" -ForegroundColor Green
-Write-Host "Press Ctrl+C to stop." -ForegroundColor Cyan
+Write-Host "`nHost will start after pressing any key..." -ForegroundColor Cyan
+[Console]::ReadKey($true) | Out-Null
 
 try {
     dotnet run --project Kiosk.Api/Kiosk.Api.csproj
