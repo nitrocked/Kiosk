@@ -1,4 +1,4 @@
-# Kiosk API API REST for technical knowledge test.
+# Kiosk API REST for technical knowledge test.
 
 The API emulates the management of kiosk terminals using three entities structured as follows:
   - Customer: Customers that can own one or more kiosk terminals. A customer may have from 0 to N associated kiosks.
