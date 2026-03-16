@@ -1,0 +1,17 @@
+C:\Users\klint\source\Kiosk\Kiosk.Data\bin\Debug\net9.0\Kiosk.Data.deps.json
+C:\Users\klint\source\Kiosk\Kiosk.Data\bin\Debug\net9.0\Kiosk.Data.runtimeconfig.json
+C:\Users\klint\source\Kiosk\Kiosk.Data\bin\Debug\net9.0\Kiosk.Data.dll
+C:\Users\klint\source\Kiosk\Kiosk.Data\bin\Debug\net9.0\Kiosk.Data.pdb
+C:\Users\klint\source\Kiosk\Kiosk.Data\bin\Debug\net9.0\Kiosk.Entities.dll
+C:\Users\klint\source\Kiosk\Kiosk.Data\bin\Debug\net9.0\Kiosk.Entities.pdb
+C:\Users\klint\source\Kiosk\Kiosk.Data\obj\Debug\net9.0\Kiosk.Data.csproj.AssemblyReference.cache
+C:\Users\klint\source\Kiosk\Kiosk.Data\obj\Debug\net9.0\Kiosk.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\klint\source\Kiosk\Kiosk.Data\obj\Debug\net9.0\Kiosk.Data.AssemblyInfoInputs.cache
+C:\Users\klint\source\Kiosk\Kiosk.Data\obj\Debug\net9.0\Kiosk.Data.AssemblyInfo.cs
+C:\Users\klint\source\Kiosk\Kiosk.Data\obj\Debug\net9.0\Kiosk.Data.csproj.CoreCompileInputs.cache
+C:\Users\klint\source\Kiosk\Kiosk.Data\obj\Debug\net9.0\Kiosk.Data.csproj.Up2Date
+C:\Users\klint\source\Kiosk\Kiosk.Data\obj\Debug\net9.0\Kiosk.Data.dll
+C:\Users\klint\source\Kiosk\Kiosk.Data\obj\Debug\net9.0\refint\Kiosk.Data.dll
+C:\Users\klint\source\Kiosk\Kiosk.Data\obj\Debug\net9.0\Kiosk.Data.pdb
+C:\Users\klint\source\Kiosk\Kiosk.Data\obj\Debug\net9.0\Kiosk.Data.genruntimeconfig.cache
+C:\Users\klint\source\Kiosk\Kiosk.Data\obj\Debug\net9.0\ref\Kiosk.Data.dll
