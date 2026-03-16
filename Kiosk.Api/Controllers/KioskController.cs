@@ -49,7 +49,7 @@ public class KioskController : ControllerBase
             return NotFound();
         }
 
-        return kiosk;
+        return Ok(kiosk);
     }
 
     // POST: api/Kiosk

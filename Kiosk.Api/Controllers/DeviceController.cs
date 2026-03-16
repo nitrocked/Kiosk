@@ -49,7 +49,7 @@ public class DeviceController : ControllerBase
             return NotFound();
         }
 
-        return device;
+        return Ok(device);
     }
 
     // POST: api/Device
