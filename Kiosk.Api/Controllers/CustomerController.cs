@@ -51,7 +51,7 @@ public class CustomerController : ControllerBase
             return NotFound();
         }
 
-        return customer;
+        return Ok(customer);
     }
 
     // POST: api/Customer

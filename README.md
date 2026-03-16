@@ -27,7 +27,27 @@ The API emulates the management of kiosk terminals using three entities structur
 - Docker
 
 ## Installation & Running
+### Unattended Mode
+1. Clone repository:
+   ```bash
+   git clone https://github.com/nitrocked/Kiosk.git
+   ```
+2. Run according script that will run all required steps:
+   - For Windows:
+   ```bash
+   cd Kiosk
+   .\run-kiosk.ps1
+   ```
+   - For Linux/Mac:
+   ```bash
+   cd Kiosk
+   chmod +x run-kiosk.sh
+   ./run-kiosk.sh
+   ```
 
+   - Swagger UI will be available at https://localhost:5200/swagger/index.html
+
+### Manual Mode
 1. Clone repository:
    ```bash
    git clone https://github.com/nitrocked/Kiosk.git
@@ -52,7 +72,7 @@ The API emulates the management of kiosk terminals using three entities structur
    dotnet run
    ```
 
-4. **Authentication (JWT)**
+4. Authentication (JWT)
    
    The API is secured with JWT authentication. Use the following default credentials to obtain a token:
    - **Username:** admin
@@ -66,7 +86,17 @@ The API emulates the management of kiosk terminals using three entities structur
    - In your preferred API client tool (Postman, curl, etc):
       - Add the header `Authorization: Bearer <your_token>` to all requests
 
-5. Test API by integrated SwaggerUI or your preferred client tool:
+5. Run API by integrated SwaggerUI or your preferred client tool:
    ```
    http://localhost:5200/swagger/index.html
    ```
+
+6. Run Unit Tests:
+  - Domain tests:
+   ```bash
+    dotnet test Kiosk.Domain.Tests -v minimal
+   ```
+   - API tests:
+    ```bash
+      dotnet test Kiosk.Api.Tests -v minimal
+    ```
