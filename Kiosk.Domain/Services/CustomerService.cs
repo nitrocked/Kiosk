@@ -22,6 +22,7 @@ public class CustomerService : ICustomerService
     {
         var customers = await _context.Customers
             .Include(c => c.Kiosks)
+                .ThenInclude(k => k.Devices)
             .ToListAsync();
 
         return _mapper.Map<IEnumerable<CustomerDto>>(customers);

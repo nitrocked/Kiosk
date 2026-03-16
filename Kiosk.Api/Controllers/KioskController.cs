@@ -73,8 +73,8 @@ public class KioskController : ControllerBase
     /// </summary>
     /// <param name="id">The ID of the kiosk to update.</param>
     /// <param name="kioskDto">The updated kiosk data.</param>
-    /// <returns>No content if the update was successful.</returns>
-    /// <response code="204">If the kiosk was successfully updated.</response>
+    /// <returns>Ok if the update was successful.</returns>
+    /// <response code="200">If the kiosk was successfully updated.</response>
     /// <response code="404">If the kiosk with the specified ID is not found.</response>
     [HttpPut("{id}")]
     public async Task<IActionResult> PutKiosk(int id, UpdateKioskDto kioskDto)
@@ -85,7 +85,7 @@ public class KioskController : ControllerBase
             return NotFound();
         }
 
-        return NoContent();
+        return Ok();
     }
 
     // DELETE: api/Kiosk/5
@@ -93,8 +93,8 @@ public class KioskController : ControllerBase
     /// Deletes a kiosk by ID.
     /// </summary>
     /// <param name="id">The ID of the kiosk to delete.</param>
-    /// <returns>No content if the deletion was successful.</returns>
-    /// <response code="204">If the kiosk was successfully deleted.</response>
+    /// <returns>Ok if the deletion was successful.</returns>
+    /// <response code="200">If the kiosk was successfully deleted.</response>
     /// <response code="404">If the kiosk with the specified ID is not found.</response>
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteKiosk(int id)
@@ -105,7 +105,7 @@ public class KioskController : ControllerBase
             return NotFound();
         }
 
-        return NoContent();
+        return Ok();
     }
 
     // POST: api/Kiosk/{kioskId}/devices/{deviceId}
@@ -114,8 +114,8 @@ public class KioskController : ControllerBase
     /// </summary>
     /// <param name="kioskId">The ID of the kiosk to assign the device to.</param>
     /// <param name="deviceId">The ID of the device to assign.</param>
-    /// <returns>No content if the assignment was successful, or NotFound if the kiosk or device does not exist.</returns>
-    /// <response code="204">If the device was successfully assigned to the kiosk.</response>
+    /// <returns>Ok if the assignment was successful, or NotFound if the kiosk or device does not exist.</returns>
+    /// <response code="200">If the device was successfully assigned to the kiosk.</response>
     /// <response code="404">If the kiosk or device is not found.</response>
     [HttpPost("{kioskId}/devices/{deviceId}")]
     public async Task<IActionResult> AssignDeviceToKiosk(int kioskId, int deviceId)
@@ -126,7 +126,7 @@ public class KioskController : ControllerBase
             return NotFound("Kiosk or Device not found.");
         }
 
-        return NoContent();
+        return Ok();
     }
 
     // DELETE: api/Kiosk/{kioskId}/devices/{deviceId}
@@ -135,8 +135,8 @@ public class KioskController : ControllerBase
     /// </summary>
     /// <param name="kioskId">The ID of the kiosk to unassign the device from.</param>
     /// <param name="deviceId">The ID of the device to unassign.</param>
-    /// <returns>No content if the unassignment was successful, or NotFound if the kiosk or device does not exist, or device is not assigned to this kiosk.</returns>
-    /// <response code="204">If the device was successfully unassigned from the kiosk.</response>
+    /// <returns>Ok if the unassignment was successful, or NotFound if the kiosk or device does not exist, or device is not assigned to this kiosk.</returns>
+    /// <response code="200">If the device was successfully unassigned from the kiosk.</response>
     /// <response code="404">If the kiosk or device is not found, or device is not assigned to this kiosk.</response>
     [HttpDelete("{kioskId}/devices/{deviceId}")]
     public async Task<IActionResult> UnassignDeviceFromKiosk(int kioskId, int deviceId)
@@ -147,6 +147,6 @@ public class KioskController : ControllerBase
             return NotFound("Kiosk or Device not found, or device is not assigned to this kiosk.");
         }
 
-        return NoContent();
+        return Ok();
     }
 }

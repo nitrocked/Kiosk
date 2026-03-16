@@ -73,8 +73,8 @@ public class DeviceController : ControllerBase
     /// </summary>
     /// <param name="id">The ID of the device to update.</param>
     /// <param name="deviceDto">The updated device data.</param>
-    /// <returns>No content if the update was successful.</returns>
-    /// <response code="204">If the device was successfully updated.</response>
+    /// <returns>Ok if the update was successful.</returns>
+    /// <response code="200">If the device was successfully updated.</response>
     /// <response code="404">If the device with the specified ID is not found.</response>
     [HttpPut("{id}")]
     public async Task<IActionResult> PutDevice(int id, UpdateDeviceDto deviceDto)
@@ -85,7 +85,7 @@ public class DeviceController : ControllerBase
             return NotFound();
         }
 
-        return NoContent();
+        return Ok();
     }
 
     // DELETE: api/Device/5
@@ -93,8 +93,8 @@ public class DeviceController : ControllerBase
     /// Deletes a device by ID.
     /// </summary>
     /// <param name="id">The ID of the device to delete.</param>
-    /// <returns>No content if the deletion was successful.</returns>
-    /// <response code="204">If the device was successfully deleted.</response>
+    /// <returns>OK if the deletion was successful.</returns>
+    /// <response code="200">If the device was successfully deleted.</response>
     /// <response code="404">If the device with the specified ID is not found.</response>
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteDevice(int id)
@@ -105,6 +105,6 @@ public class DeviceController : ControllerBase
             return NotFound();
         }
 
-        return NoContent();
+        return Ok();
     }
 }

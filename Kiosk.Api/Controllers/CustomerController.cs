@@ -77,7 +77,9 @@ public class CustomerController : ControllerBase
     /// </summary>
     /// <param name="id">The ID of the customer to update.</param>
     /// <param name="customerDto">The updated customer data.</param>
-    /// <returns>No content if the update was successful, or NotFound if the customer does not exist.</returns>
+    /// <returns>Ok if the update was successful, or NotFound if the customer does not exist.</returns>
+    /// <response code="200">If the customer was successfully updated.</response>
+    /// <response code="404">If the customer with the specified ID is not found.</
     [HttpPut("{id}")]
     [Description("Updates an existing customer.")]
     public async Task<IActionResult> PutCustomer(int id, UpdateCustomerDto customerDto)
@@ -88,7 +90,7 @@ public class CustomerController : ControllerBase
             return NotFound();
         }
 
-        return NoContent();
+        return Ok();
     }
 
     // DELETE: api/Customer/5
@@ -96,7 +98,10 @@ public class CustomerController : ControllerBase
     /// Deletes a customer by ID.
     /// </summary>
     /// <param name="id">The ID of the customer to delete.</param>
-    /// <returns>No content if the deletion was successful, or NotFound if the customer does not exist.</returns>
+    /// <returns>Ok if the deletion was successful, or NotFound if the customer does not exist.</returns>
+    /// <response code="200">If the customer was successfully deleted.</response>
+    /// <response code="404">If the customer with the specified ID is not found.</response>
+    /// <response code="500">If there was an error deleting the customer.</response>
     [HttpDelete("{id}")]
     [Description("Deletes a customer by ID.")]
     public async Task<IActionResult> DeleteCustomer(int id)
@@ -107,7 +112,7 @@ public class CustomerController : ControllerBase
             return NotFound();
         }
 
-        return NoContent();
+        return Ok();
     }
 
     // POST: api/Customer/{customerId}/kiosks/{kioskId}
@@ -116,7 +121,9 @@ public class CustomerController : ControllerBase
     /// </summary>
     /// <param name="customerId">The ID of the customer to assign the kiosk to.</param>
     /// <param name="kioskId">The ID of the kiosk to assign.</param>
-    /// <returns>No content if the assignment was successful, or NotFound if the customer or kiosk does not exist.</returns>
+    /// <returns>Ok if the assignment was successful, or NotFound if the customer or kiosk does not exist.</returns>
+    /// <response code="200">If the kiosk was successfully assigned to the customer.</response>
+    /// <response code="404">If the customer or kiosk is not found.</response>
     [HttpPost("{customerId}/kiosks/{kioskId}")]
     [Description("Assigns a kiosk to a customer.")]    
     public async Task<IActionResult> AssignKioskToCustomer(int customerId, int kioskId)
@@ -127,7 +134,7 @@ public class CustomerController : ControllerBase
             return NotFound("Customer or Kiosk not found.");
         }
 
-        return NoContent();
+        return Ok();
     }
 
     // DELETE: api/Customer/{customerId}/kiosks/{kioskId}
@@ -136,7 +143,9 @@ public class CustomerController : ControllerBase
     /// </summary>
     /// <param name="customerId">The ID of the customer to unassign the kiosk from.</param>
     /// <param name="kioskId">The ID of the kiosk to unassign.</param>
-    /// <returns>No content if the unassignment was successful, or NotFound if the customer or kiosk does not exist, or if the kiosk is not assigned to this customer.</returns>    
+    /// <returns>Ok if the unassignment was successful, or NotFound if the customer or kiosk does not exist, or if the kiosk is not assigned to this customer.</returns>    
+    /// <response code="200">If the kiosk was successfully unassigned from the customer.</response>
+    /// <response code="404">If the customer or kiosk is not found, or if
     [HttpDelete("{customerId}/kiosks/{kioskId}")]
     [Description("Unassigns a kiosk from a customer.")]
     public async Task<IActionResult> UnassignKioskFromCustomer(int customerId, int kioskId)
@@ -147,6 +156,6 @@ public class CustomerController : ControllerBase
             return NotFound("Customer or Kiosk not found, or kiosk is not assigned to this customer.");
         }
 
-        return NoContent();
+        return Ok();
     }
 }
