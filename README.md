@@ -32,7 +32,11 @@ The API emulates the management of kiosk terminals using three entities structur
    ```bash
    git clone https://github.com/nitrocked/Kiosk.git
    ```
-2. Run according script that will run all required steps:
+2. Thrust certificate for localhost (required for HTTPS):
+   ```bash
+   dotnet dev-certs https --trust
+   ```
+3. Run according script that will run all required steps:
    - For Windows:
    ```bash
    cd Kiosk
@@ -58,8 +62,22 @@ The API emulates the management of kiosk terminals using three entities structur
    cd Kiosk
    docker-compose up -d
    ```
+3. Thrust certificate for localhost (required for HTTPS):
+   ```bash
+   dotnet dev-certs https --trust
+   ```
 
-3. Build and run project:
+4. [Optional] Run Unit Tests:
+  - Domain tests:
+   ```bash
+    dotnet test Kiosk.Domain.Tests -v minimal
+   ```
+   - API tests:
+    ```bash
+      dotnet test Kiosk.Api.Tests -v minimal
+    ```
+
+4. Build and run project:
    ```bash
    dotnet restore
    dotnet build
@@ -72,8 +90,7 @@ The API emulates the management of kiosk terminals using three entities structur
    dotnet run
    ```
 
-4. Authentication (JWT)
-   
+5. About Authentication (JWT)
    The API is secured with JWT authentication. Use the following default credentials to obtain a token:
    - **Username:** admin
    - **Password:** password
@@ -86,17 +103,8 @@ The API emulates the management of kiosk terminals using three entities structur
    - In your preferred API client tool (Postman, curl, etc):
       - Add the header `Authorization: Bearer <your_token>` to all requests
 
-5. Run API by integrated SwaggerUI or your preferred client tool:
+6. Run API by integrated SwaggerUI or your preferred client tool:
    ```
    http://localhost:5200/swagger/index.html
    ```
 
-6. Run Unit Tests:
-  - Domain tests:
-   ```bash
-    dotnet test Kiosk.Domain.Tests -v minimal
-   ```
-   - API tests:
-    ```bash
-      dotnet test Kiosk.Api.Tests -v minimal
-    ```
