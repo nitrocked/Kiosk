@@ -6,8 +6,8 @@ The API emulates the management of kiosk terminals using three entities structur
   - Device: Devices or peripherals that are part of a kiosk terminal.
 
 **Considerations:**
-• 	When the API project starts, migrations and seeding are applied idempotently. I am aware this is not the optimal approach in a real-world environment; I choosed it for this technical test for the sake of simplicity.
-• 	I am aware that the Get All action in the Customer controller retrieves all nested child elements, which would negatively impact performance in a real-world scenario with larger datasets.
+  - When the API project starts, migrations and seeding are applied idempotently. I am aware this is not the optimal approach in a real-world environment; I choosed it for this technical test for the sake of simplicity.
+  - I am aware that the Get All action in the Customer controller retrieves all nested child elements, which would negatively impact performance in a real-world scenario with larger datasets. I´ve implemented it this way for the sake of simplicity in this technical test, but in a production environment, I would implement pagination and filtering to optimize performance and resource usage.
 
 ## Features
 
