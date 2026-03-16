@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Kiosk.Domain.Interfaces;
 using Kiosk.Domain.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Kiosk.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class KioskController : ControllerBase
 {
     private readonly IKioskService _kioskService;
