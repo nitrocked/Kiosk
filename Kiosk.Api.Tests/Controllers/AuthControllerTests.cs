@@ -3,6 +3,7 @@ using Kiosk.Api.Controllers;
 using Kiosk.Domain.DTOs.Auth;
 using Kiosk.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 
 namespace Kiosk.Api.Tests.Controllers;
@@ -15,7 +16,7 @@ public class AuthControllerTests
     public AuthControllerTests()
     {
         _authServiceMock = new Mock<IAuthService>();
-        _controller = new AuthController(_authServiceMock.Object);
+        _controller = new AuthController(_authServiceMock.Object, NullLogger<AuthController>.Instance);
     }
 
     [Fact]

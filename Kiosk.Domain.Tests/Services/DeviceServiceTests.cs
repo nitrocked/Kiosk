@@ -1,5 +1,6 @@
 using Kiosk.Domain.DTOs;
 using Kiosk.Domain.Services;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Kiosk.Domain.Tests.Services;
 
@@ -9,7 +10,7 @@ public class DeviceServiceTests
     public async Task CreateAsync_ShouldPersistDevice()
     {
         using var context = TestHelpers.CreateContext(nameof(CreateAsync_ShouldPersistDevice));
-        var service = new DeviceService(context, TestHelpers.CreateMapper());
+        var service = new DeviceService(context, TestHelpers.CreateMapper(), NullLogger<DeviceService>.Instance);
 
         var dto = new CreateDeviceDto
         {
@@ -37,7 +38,7 @@ public class DeviceServiceTests
     public async Task UpdateAsync_ShouldUpdateExistingDevice()
     {
         using var context = TestHelpers.CreateContext(nameof(UpdateAsync_ShouldUpdateExistingDevice));
-        var service = new DeviceService(context, TestHelpers.CreateMapper());
+        var service = new DeviceService(context, TestHelpers.CreateMapper(), NullLogger<DeviceService>.Instance);
 
         var createDto = new CreateDeviceDto
         {
@@ -77,7 +78,7 @@ public class DeviceServiceTests
     public async Task DeleteAsync_ShouldRemoveDevice()
     {
         using var context = TestHelpers.CreateContext(nameof(DeleteAsync_ShouldRemoveDevice));
-        var service = new DeviceService(context, TestHelpers.CreateMapper());
+        var service = new DeviceService(context, TestHelpers.CreateMapper(), NullLogger<DeviceService>.Instance);
 
         var created = await service.CreateAsync(new CreateDeviceDto
         {

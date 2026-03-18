@@ -4,6 +4,7 @@ using Kiosk.Domain.DTOs;
 using Kiosk.Domain.Mapping;
 using Kiosk.Domain.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Kiosk.Domain.Tests.Services;
 
@@ -28,7 +29,7 @@ public class CustomerServiceTests
     public async Task CreateAsync_ShouldPersistCustomer()
     {
         using var context = CreateContext(nameof(CreateAsync_ShouldPersistCustomer));
-        var service = new CustomerService(context, CreateMapper());
+        var service = new CustomerService(context, CreateMapper(), NullLogger<CustomerService>.Instance);
 
         var dto = new CreateCustomerDto { Name = "Test customer", CIF = "A12345678" };
         var created = await service.CreateAsync(dto);
@@ -43,7 +44,7 @@ public class CustomerServiceTests
     public async Task UpdateAsync_ShouldUpdateExistingCustomer()
     {
         using var context = CreateContext(nameof(UpdateAsync_ShouldUpdateExistingCustomer));
-        var service = new CustomerService(context, CreateMapper());
+        var service = new CustomerService(context, CreateMapper(), NullLogger<CustomerService>.Instance);
 
         var createDto = new CreateCustomerDto { Name = "Initial", CIF = "A12345678" };
         var created = await service.CreateAsync(createDto);
@@ -61,7 +62,7 @@ public class CustomerServiceTests
     public async Task DeleteAsync_ShouldRemoveCustomer()
     {
         using var context = CreateContext(nameof(DeleteAsync_ShouldRemoveCustomer));
-        var service = new CustomerService(context, CreateMapper());
+        var service = new CustomerService(context, CreateMapper(), NullLogger<CustomerService>.Instance);
 
         var created = await service.CreateAsync(new CreateCustomerDto { Name = "To Delete", CIF = "A12345678" });
         var deleted = await service.DeleteAsync(created.Id);
@@ -76,7 +77,7 @@ public class CustomerServiceTests
     public async Task AssignAndUnassignKioskAsync_ShouldUpdateKioskCustomerId()
     {
         using var context = CreateContext(nameof(AssignAndUnassignKioskAsync_ShouldUpdateKioskCustomerId));
-        var service = new CustomerService(context, CreateMapper());
+        var service = new CustomerService(context, CreateMapper(), NullLogger<CustomerService>.Instance);
 
         var customer = await service.CreateAsync(new CreateCustomerDto { Name = "Cliente", CIF = "A12345678" });
 

@@ -1,16 +1,21 @@
+using System.Text;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Kiosk.Data;
 using Kiosk.Domain.Services;
 using Kiosk.Domain.Interfaces;
 using Kiosk.Domain.Mapping;
-using Microsoft.EntityFrameworkCore;
-using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using NSwag.Generation.Processors.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddLogging(config =>
+{
+    config.AddConsole();
+    config.AddDebug();
+});
 // Add services to the container.
 builder.Services.AddDbContext<KioskDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

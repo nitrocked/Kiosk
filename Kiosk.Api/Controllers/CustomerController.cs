@@ -1,8 +1,8 @@
+using System.ComponentModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Kiosk.Domain.Interfaces;
 using Kiosk.Domain.DTOs;
-using System.ComponentModel;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Kiosk.Api.Controllers;
 
@@ -12,10 +12,13 @@ namespace Kiosk.Api.Controllers;
 public class CustomerController : ControllerBase
 {
     private readonly ICustomerService _customerService;
+    private readonly ILogger<CustomerController> _logger;
 
-    public CustomerController(ICustomerService customerService)
+
+    public CustomerController(ICustomerService customerService, ILogger<CustomerController> logger)
     {
         _customerService = customerService;
+        _logger = logger;
     }
 
     // GET: api/Customer
@@ -29,8 +32,16 @@ public class CustomerController : ControllerBase
     [Description("Retrieves all customers along with their associated kiosks.")]
     public async Task<ActionResult<IEnumerable<CustomerDto>>> GetCustomers()
     {
-        var customers = await _customerService.GetAllAsync();
-        return Ok(customers);
+        try
+        {
+            var customers = await _customerService.GetAllAsync();
+            return Ok(customers);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving customers: {Message}", ex.Message);
+            return StatusCode(500, $"Internal server error");
+        }
     }
 
     // GET: api/Customer/5
@@ -40,18 +51,28 @@ public class CustomerController : ControllerBase
     /// <param name="id">The ID of the customer to retrieve.</param>
     /// <returns>The customer with the specified ID, including their kiosks and devices.</returns>
     /// <response code="200">Returns the customer with the specified ID.</response>
+    /// <response code="404">If the customer with the specified ID is not found.</response>
+    /// <response code="500">If there was an error retrieving the customer.</response>
     [HttpGet("{id}")]
     [Description("Retrieves a specific customer by ID, including their kiosks and devices.")]
     public async Task<ActionResult<CustomerDto>> GetCustomer(int id)
     {
-        var customer = await _customerService.GetByIdAsync(id);
-
-        if (customer == null)
+        try
         {
-            return NotFound();
-        }
+            var customer = await _customerService.GetByIdAsync(id);
 
-        return Ok(customer);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(customer);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving customer with ID {CustomerId}: {Message}", id, ex.Message);
+            return StatusCode(500, $"Internal server error");
+        }
     }
 
     // POST: api/Customer
@@ -67,8 +88,16 @@ public class CustomerController : ControllerBase
     [Description("Creates a new customer.")]
     public async Task<ActionResult<CustomerDto>> PostCustomer(CreateCustomerDto customerDto)
     {
-        var createdCustomer = await _customerService.CreateAsync(customerDto);
-        return CreatedAtAction(nameof(GetCustomer), new { id = createdCustomer.Id }, createdCustomer);
+        try
+        {
+            var createdCustomer = await _customerService.CreateAsync(customerDto);
+            return CreatedAtAction(nameof(GetCustomer), new { id = createdCustomer.Id }, createdCustomer);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error creating customer: {Message}", ex.Message);
+            return StatusCode(500, $"Internal server error");
+        }
     }
 
     // PUT: api/Customer/5
@@ -80,17 +109,26 @@ public class CustomerController : ControllerBase
     /// <returns>Ok if the update was successful, or NotFound if the customer does not exist.</returns>
     /// <response code="200">If the customer was successfully updated.</response>
     /// <response code="404">If the customer with the specified ID is not found.</
+    /// <response code="500">If there was an error updating the customer.</response>
     [HttpPut("{id}")]
     [Description("Updates an existing customer.")]
     public async Task<IActionResult> PutCustomer(int id, UpdateCustomerDto customerDto)
     {
-        var updatedCustomer = await _customerService.UpdateAsync(id, customerDto);
-        if (updatedCustomer == null)
+        try
         {
-            return NotFound();
-        }
+            var updatedCustomer = await _customerService.UpdateAsync(id, customerDto);
+            if (updatedCustomer == null)
+            {
+                return NotFound();
+            }
 
-        return Ok();
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error updating customer with ID {CustomerId}: {Message}", id, ex.Message);
+            return StatusCode(500, $"Internal server error");
+        }
     }
 
     // DELETE: api/Customer/5
@@ -106,13 +144,21 @@ public class CustomerController : ControllerBase
     [Description("Deletes a customer by ID.")]
     public async Task<IActionResult> DeleteCustomer(int id)
     {
-        var result = await _customerService.DeleteAsync(id);
-        if (!result)
+        try
         {
-            return NotFound();
-        }
+            var result = await _customerService.DeleteAsync(id);
+            if (!result)
+            {
+                return NotFound();
+            }
 
-        return Ok();
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error deleting customer with ID {CustomerId}: {Message}", id, ex.Message);
+            return StatusCode(500, $"Internal server error");
+        }
     }
 
     // POST: api/Customer/{customerId}/kiosks/{kioskId}
@@ -125,16 +171,24 @@ public class CustomerController : ControllerBase
     /// <response code="200">If the kiosk was successfully assigned to the customer.</response>
     /// <response code="404">If the customer or kiosk is not found.</response>
     [HttpPost("{customerId}/kiosks/{kioskId}")]
-    [Description("Assigns a kiosk to a customer.")]    
+    [Description("Assigns a kiosk to a customer.")]
     public async Task<IActionResult> AssignKioskToCustomer(int customerId, int kioskId)
     {
-        var result = await _customerService.AssignKioskAsync(customerId, kioskId);
-        if (!result)
+        try
         {
-            return NotFound("Customer or Kiosk not found.");
-        }
+            var result = await _customerService.AssignKioskAsync(customerId, kioskId);
+            if (!result)
+            {
+                return NotFound("Customer or Kiosk not found.");
+            }
 
-        return Ok();
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error assigning kiosk with ID {KioskId} to customer with ID {CustomerId}: {Message}", kioskId, customerId, ex.Message);
+            return StatusCode(500, $"Internal server error");
+        }
     }
 
     // DELETE: api/Customer/{customerId}/kiosks/{kioskId}
@@ -150,12 +204,20 @@ public class CustomerController : ControllerBase
     [Description("Unassigns a kiosk from a customer.")]
     public async Task<IActionResult> UnassignKioskFromCustomer(int customerId, int kioskId)
     {
-        var result = await _customerService.UnassignKioskAsync(customerId, kioskId);
-        if (!result)
+        try
         {
-            return NotFound("Customer or Kiosk not found, or kiosk is not assigned to this customer.");
-        }
+            var result = await _customerService.UnassignKioskAsync(customerId, kioskId);
+            if (!result)
+            {
+                return NotFound("Customer or Kiosk not found, or kiosk is not assigned to this customer.");
+            }
 
-        return Ok();
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error unassigning kiosk with ID {KioskId} from customer with ID {CustomerId}: {Message}", kioskId, customerId, ex.Message);
+            return StatusCode(500, $"Internal server error");
+        }
     }
 }

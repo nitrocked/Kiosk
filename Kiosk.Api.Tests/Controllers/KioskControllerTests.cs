@@ -3,6 +3,7 @@ using Kiosk.Api.Controllers;
 using Kiosk.Domain.DTOs;
 using Kiosk.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 
 namespace Kiosk.Api.Tests.Controllers;
@@ -15,7 +16,7 @@ public class KioskControllerTests
     public KioskControllerTests()
     {
         _kioskServiceMock = new Mock<IKioskService>();
-        _controller = new KioskController(_kioskServiceMock.Object);
+        _controller = new KioskController(_kioskServiceMock.Object, NullLogger<KioskController>.Instance);
     }
 
     [Fact]
