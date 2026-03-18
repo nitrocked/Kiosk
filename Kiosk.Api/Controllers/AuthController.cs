@@ -1,6 +1,6 @@
+using Microsoft.AspNetCore.Mvc;
 using Kiosk.Domain.DTOs.Auth;
 using Kiosk.Domain.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Kiosk.Api.Controllers;
 
@@ -9,10 +9,12 @@ namespace Kiosk.Api.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
+    private readonly ILogger<AuthController> _logger;
 
-    public AuthController(IAuthService authService)
+    public AuthController(IAuthService authService, ILogger<AuthController> logger)
     {
         _authService = authService;
+        _logger = logger;
     }
 
     // POST: api/Auth/login
@@ -25,11 +27,19 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
     {
-        var result = await _authService.LoginAsync(loginDto);
-        if (result == null)
+        try
         {
-            return Unauthorized("Invalid credentials");
+            var result = await _authService.LoginAsync(loginDto);
+            if (result == null)
+            {
+                return Unauthorized("Invalid credentials");
+            }
+            return Ok(result);
         }
-        return Ok(result);
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Login failed for user {Username}: {Message}", loginDto.Username, ex.Message);
+            return StatusCode(500, $"Internal server error");
+        }
     }
 }

@@ -1,7 +1,7 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Kiosk.Domain.Interfaces;
 using Kiosk.Domain.DTOs;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Kiosk.Api.Controllers;
 
@@ -11,10 +11,12 @@ namespace Kiosk.Api.Controllers;
 public class KioskController : ControllerBase
 {
     private readonly IKioskService _kioskService;
+    private readonly ILogger<KioskController> _logger;
 
-    public KioskController(IKioskService kioskService)
+    public KioskController(IKioskService kioskService, ILogger<KioskController> logger)
     {
         _kioskService = kioskService;
+        _logger = logger;
     }
 
     // GET: api/Kiosk
@@ -27,8 +29,16 @@ public class KioskController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<KioskDto>>> GetKiosks()
     {
-        var kiosks = await _kioskService.GetAllAsync();
-        return Ok(kiosks);
+        try
+        {
+            var kiosks = await _kioskService.GetAllAsync();
+            return Ok(kiosks);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving kiosks: {Message}", ex.Message);
+            return StatusCode(500, $"Internal server error");
+        }
     }
 
     // GET: api/Kiosk/5
@@ -42,14 +52,22 @@ public class KioskController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<KioskDto>> GetKiosk(int id)
     {
-        var kiosk = await _kioskService.GetByIdAsync(id);
-
-        if (kiosk == null)
+        try
         {
-            return NotFound();
-        }
+            var kiosk = await _kioskService.GetByIdAsync(id);
 
-        return Ok(kiosk);
+            if (kiosk == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(kiosk);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving kiosk with ID {KioskId}: {Message}", id, ex.Message);
+            return StatusCode(500, $"Internal server error");
+        }
     }
 
     // POST: api/Kiosk
@@ -63,8 +81,16 @@ public class KioskController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<KioskDto>> PostKiosk(CreateKioskDto kioskDto)
     {
-        var createdKiosk = await _kioskService.CreateAsync(kioskDto);
-        return CreatedAtAction(nameof(GetKiosk), new { id = createdKiosk.Id }, createdKiosk);
+        try
+        {
+            var createdKiosk = await _kioskService.CreateAsync(kioskDto);
+            return CreatedAtAction(nameof(GetKiosk), new { id = createdKiosk.Id }, createdKiosk);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error creating kiosk: {Message}", ex.Message);
+            return StatusCode(500, $"Internal server error");
+        }
     }
 
     // PUT: api/Kiosk/5
@@ -79,13 +105,21 @@ public class KioskController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> PutKiosk(int id, UpdateKioskDto kioskDto)
     {
-        var updatedKiosk = await _kioskService.UpdateAsync(id, kioskDto);
-        if (updatedKiosk == null)
+        try
         {
-            return NotFound();
-        }
+            var updatedKiosk = await _kioskService.UpdateAsync(id, kioskDto);
+            if (updatedKiosk == null)
+            {
+                return NotFound();
+            }
 
-        return Ok();
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error updating kiosk with ID {KioskId}: {Message}", id, ex.Message);
+            return StatusCode(500, $"Internal server error");
+        }
     }
 
     // DELETE: api/Kiosk/5
@@ -99,13 +133,21 @@ public class KioskController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteKiosk(int id)
     {
-        var result = await _kioskService.DeleteAsync(id);
-        if (!result)
+        try
         {
-            return NotFound();
-        }
+            var result = await _kioskService.DeleteAsync(id);
+            if (!result)
+            {
+                return NotFound();
+            }
 
-        return Ok();
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error deleting kiosk with ID {KioskId}: {Message}", id, ex.Message);
+            return StatusCode(500, $"Internal server error");
+        }
     }
 
     // POST: api/Kiosk/{kioskId}/devices/{deviceId}
@@ -120,13 +162,21 @@ public class KioskController : ControllerBase
     [HttpPost("{kioskId}/devices/{deviceId}")]
     public async Task<IActionResult> AssignDeviceToKiosk(int kioskId, int deviceId)
     {
-        var result = await _kioskService.AssignDeviceAsync(kioskId, deviceId);
-        if (!result)
+        try
         {
-            return NotFound("Kiosk or Device not found.");
-        }
+            var result = await _kioskService.AssignDeviceAsync(kioskId, deviceId);
+            if (!result)
+            {
+                return NotFound("Kiosk or Device not found.");
+            }
 
-        return Ok();
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error assigning device with ID {DeviceId} to kiosk with ID {KioskId}: {Message}", kioskId, deviceId, ex.Message);
+            return StatusCode(500, $"Internal server error");
+        }
     }
 
     // DELETE: api/Kiosk/{kioskId}/devices/{deviceId}
@@ -141,12 +191,20 @@ public class KioskController : ControllerBase
     [HttpDelete("{kioskId}/devices/{deviceId}")]
     public async Task<IActionResult> UnassignDeviceFromKiosk(int kioskId, int deviceId)
     {
-        var result = await _kioskService.UnassignDeviceAsync(kioskId, deviceId);
-        if (!result)
+        try
         {
-            return NotFound("Kiosk or Device not found, or device is not assigned to this kiosk.");
-        }
+            var result = await _kioskService.UnassignDeviceAsync(kioskId, deviceId);
+            if (!result)
+            {
+                return NotFound("Kiosk or Device not found, or device is not assigned to this kiosk.");
+            }
 
-        return Ok();
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error unassigning device with ID {DeviceId} from kiosk with ID {KioskId}: {Message}", kioskId, deviceId, ex.Message);
+            return StatusCode(500, $"Internal server error");
+        } 
     }
 }

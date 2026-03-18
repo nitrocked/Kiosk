@@ -1,4 +1,4 @@
-# Kiosk API REST for technical knowledge test.
+# Kiosk API REST for technical knowledge test
 
 The API emulates the management of kiosk terminals using three entities structured as follows:
   - Customer: Customers that can own one or more kiosk terminals. A customer may have from 0 to N associated kiosks.
@@ -7,7 +7,12 @@ The API emulates the management of kiosk terminals using three entities structur
 
 **Considerations:**
   - When the API project starts, migrations and seeding are applied idempotently. I am aware this is not the optimal approach in a real-world environment. I have chosen it for this technical test for simplicity.
-  - I am aware that the Get All action in the Customer controller retrieves all nested child elements, which would negatively impact performance in a real-world scenario with larger datasets. I´ve implemented it this way for the sake of simplicity in this technical test, but in a production environment, I would implement pagination and filtering to optimize performance and resource usage, as well as for not getting into so heavy object in memory.
+  - I am aware that the Get All action in the Customer controller retrieves all nested child elements, which would negatively impact performance in a real-world scenario with larger datasets. I´ve implemented it this way for simplicity in this technical test, but in a production environment, I would implement pagination and filtering to optimize performance and resource usage, as well as for not getting into so heavy object in memory.
+ - JWT authentication is implemented with hardcoded credentials for simplicity: **admin/password**. In a production environment, I would implement a more robust authentication mechanism, such as integrating with an identity provider or using a database to manage user credentials securely.
+ - Known improvements:
+   - Add a global exception handler to catch unhandled exceptions and return consistent error responses.
+   - Refine data model and Controller actions.
+   - Implement more unit tests to cover edge cases and increase code coverage.
 
 ## Features
 

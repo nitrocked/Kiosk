@@ -1,5 +1,6 @@
 using Kiosk.Domain.DTOs;
 using Kiosk.Domain.Services;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Kiosk.Domain.Tests.Services;
 
@@ -9,7 +10,7 @@ public class KioskServiceTests
     public async Task CreateAsync_ShouldPersistKiosk()
     {
         using var context = TestHelpers.CreateContext(nameof(CreateAsync_ShouldPersistKiosk));
-        var service = new KioskService(context, TestHelpers.CreateMapper());
+        var service = new KioskService(context, TestHelpers.CreateMapper(), NullLogger<KioskService>.Instance);
 
         var dto = new CreateKioskDto
         {
@@ -33,7 +34,7 @@ public class KioskServiceTests
     public async Task UpdateAsync_ShouldUpdateExistingKiosk()
     {
         using var context = TestHelpers.CreateContext(nameof(UpdateAsync_ShouldUpdateExistingKiosk));
-        var service = new KioskService(context, TestHelpers.CreateMapper());
+        var service = new KioskService(context, TestHelpers.CreateMapper(), NullLogger<KioskService>.Instance);
 
         var createDto = new CreateKioskDto
         {
@@ -67,7 +68,7 @@ public class KioskServiceTests
     public async Task DeleteAsync_ShouldRemoveKiosk()
     {
         using var context = TestHelpers.CreateContext(nameof(DeleteAsync_ShouldRemoveKiosk));
-        var service = new KioskService(context, TestHelpers.CreateMapper());
+        var service = new KioskService(context, TestHelpers.CreateMapper(), NullLogger<KioskService>.Instance);
 
         var created = await service.CreateAsync(new CreateKioskDto
         {
@@ -88,7 +89,7 @@ public class KioskServiceTests
     public async Task AssignAndUnassignDeviceAsync_ShouldUpdateDeviceKioskId()
     {
         using var context = TestHelpers.CreateContext(nameof(AssignAndUnassignDeviceAsync_ShouldUpdateDeviceKioskId));
-        var service = new KioskService(context, TestHelpers.CreateMapper());
+        var service = new KioskService(context, TestHelpers.CreateMapper(), NullLogger<KioskService>.Instance);
 
         var kiosk = await service.CreateAsync(new CreateKioskDto
         {

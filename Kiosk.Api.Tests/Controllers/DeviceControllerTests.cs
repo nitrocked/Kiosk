@@ -3,6 +3,7 @@ using Kiosk.Api.Controllers;
 using Kiosk.Domain.DTOs;
 using Kiosk.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 
 namespace Kiosk.Api.Tests.Controllers;
@@ -15,7 +16,7 @@ public class DeviceControllerTests
     public DeviceControllerTests()
     {
         _deviceServiceMock = new Mock<IDeviceService>();
-        _controller = new DeviceController(_deviceServiceMock.Object);
+        _controller = new DeviceController(_deviceServiceMock.Object, NullLogger<DeviceController>.Instance);
     }
 
     [Fact]
