@@ -13,7 +13,6 @@ The API emulates the management of kiosk terminals using three entities structur
    - Add a global exception handler to catch unhandled exceptions and return consistent error responses.
    - Refine data model and Controller actions.
    - Implement more unit tests to cover edge cases and increase code coverage.
-
 ## Features
 
 - **.Net WebAPI 9.0**
@@ -55,7 +54,7 @@ The API emulates the management of kiosk terminals using three entities structur
    ./run-kiosk.sh
    ```
 
-   - Swagger UI will be available at https://localhost:5200/swagger/index.html
+   - Swagger UI will be available at http://localhost:5200/swagger/index.html
 
 ### Manual Mode
 1. Clone repository:
