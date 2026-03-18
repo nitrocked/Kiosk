@@ -53,8 +53,7 @@ The API emulates the management of kiosk terminals using three entities structur
    chmod +x run-kiosk.sh
    ./run-kiosk.sh
    ```
-
-   - Swagger UI will be available at http://localhost:5200/swagger/index.html
+  **Browser should open automatically with SwaggerUI, if not, access it at http://localhost:5200/swagger/index.html**
 
 ### Manual Mode
 1. Clone repository:
@@ -82,34 +81,37 @@ The API emulates the management of kiosk terminals using three entities structur
       dotnet test Kiosk.Api.Tests -v minimal
     ```
 
-4. Build and run project:
+5. Build and run project:
    ```bash
    dotnet restore
    dotnet build
-   dotnet run --project Kiosk.Api
+   dotnet watch run --no-hot-reload --project Kiosk.Api
    ```
    Or in the Kiosk.Api directory:
    ```bash
    cd Kiosk.Api
    dotnet restore
-   dotnet run
+   dotnet watch run --no-hot-reload
    ```
 
-5. About Authentication (JWT)
-   The API is secured with JWT authentication. Use the following default credentials to obtain a token:
-   - **Username:** admin
-   - **Password:** password
-   
-   To authenticate:
-   - Call `POST /api/auth/login` with the credentials to get a JWT token
-   - In SwaggerUI:
-      - Click the **"Authorize"** button (top right), then paste `Bearer <your_token>` in the value field
-      - All subsequent requests will include the authentication header automatically
-   - In your preferred API client tool (Postman, curl, etc):
-      - Add the header `Authorization: Bearer <your_token>` to all requests
+   **Browser should open automatically with SwaggerUI, if not, access it at http://localhost:5200/swagger/index.html**
 
-6. Run API by integrated SwaggerUI or your preferred client tool:
-   ```
-   http://localhost:5200/swagger/index.html
-   ```
+6. About 
+   - Authentication (JWT)
+      The API is secured with JWT authentication. Use the following default credentials to obtain a token:
+      - **Username:** admin
+      - **Password:** password
+      
+      To authenticate:
+      - Call `POST /api/auth/login` with the credentials to get a JWT token
+      - In SwaggerUI:
+         - Click the **"Authorize"** button (top right), then paste `Bearer <your_token>` in the value field
+         - All subsequent requests will include the authentication header automatically
+      - In your preferred API client tool (Postman, curl, etc):
+         - Add the header `Authorization: Bearer <your_token>` to all requests
+
+   -Run API by integrated SwaggerUI or your preferred client tool:
+      ```
+      http://localhost:5200/swagger/index.html
+      ```
 ![Swagger UI Preview](swagger.png)

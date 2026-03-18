@@ -56,7 +56,7 @@ Write-Host "`nHost will start after pressing any key..." -ForegroundColor Cyan
 [Console]::ReadKey($true) | Out-Null
 
 try {
-    dotnet run --project Kiosk.Api/Kiosk.Api.csproj
+    dotnet watch --no-hot-reload run --project Kiosk.Api
 } catch {
     Write-Host "Error running the API: $_" -ForegroundColor Red
     exit 1

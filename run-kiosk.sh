@@ -54,7 +54,7 @@ echo -e "\e[36mAuth login credentials: admin / password\e[0m"
 echo -e "\e[33m\nHost will start after pressing any key...\e[0m"
 read -n 1 -s -r
 
-dotnet run --project Kiosk.Api/Kiosk.Api.csproj
+dotnet watch --no-hot-reload run --project Kiosk.Api
 if [ $? -ne 0 ]; then
     echo -e "\e[31mError running the API\e[0m"
     exit 1
